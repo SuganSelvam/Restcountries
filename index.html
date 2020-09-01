@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<title>Rest Countries</title>
+		<style>
+			*{
+				text-align: center;
+			}
+			.mtitle{
+				text-align: center;
+				font-weight: bold;
+				font-family: Georgia, 'Times New Roman', Times, serif;
+				color: darkorange;
+				border-bottom: 2px dashed orange;
+				font-size: 20px;
+				margin: 5px;
+				padding: 5px;
+			}
+			.mflag{
+				margin: 10px;
+				width: 200px;
+				height: 150px;
+			}
+			.mcontent{
+				margin: 10px;
+				font-weight: bold;
+				font-style: initial;
+				font-family: Verdana, Geneva, Tahoma, sans-serif;
+				
+			}
+			.mcard{
+				border: 2px solid orange;
+				border-radius : 10px;
+				margin: 10px;
+			}
+		</style>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+	</head>
+ 	<body>
+ 	   	<script>				
+			var temp = fetch("https://restcountries.eu/rest/v2/all")
+			temp.then((data)=>{return data.json();
+			}).then((arr)=>{
+
+				var vContainer = document.createElement("div")
+				vContainer.setAttribute("class","mcontainer")
+				document.body.append(vContainer)
+
+				var cols = 5;
+				var rows = Math.ceil(arr.length/cols)
+				var x = 0;
+
+				for(i=0 ; i<=rows ; i++){
+
+					var vRows = document.createElement("div")
+					vRows.setAttribute("class","row")
+
+					for (j=0 ; j<=cols ; j++){
+
+						var vCols = document.createElement("div")
+						vCols.classList.add("col-sm-4","col-lg-4","mcol")
+
+						var vCard = document.createElement("div")
+						vCard.setAttribute("class","card")
+						vCard.setAttribute("class","mcard")
+
+						var vTitle = document.createElement("div")
+						vTitle.classList.add("mtitle")
+						vTitle.innerHTML = arr[x].name;
+
+						var vContent = document.createElement("div")
+						vContent.setAttribute("class","card-body")
+						vContent.setAttribute("class","mcontent")
+
+						var vFlag = document.createElement("img")
+						vFlag.src=arr[x].flag
+						vFlag.setAttribute("class","mflag")
+
+						var vCap = document.createElement("div")
+						vCap.setAttribute("class","mcap")
+						vCap.innerHTML = "Capital : "+arr[x].capital
+
+						vPop = document.createElement("div")
+						vPop.setAttribute("class","mpop")
+						vPop.innerHTML="Population : "+arr[x].population
+
+						var vReg = document.createElement("div")
+						vReg.setAttribute("class","mreg")
+						vReg.innerHTML="Region : "+arr[x].region
+
+						var vCode = document.createElement("div")
+						vCode.setAttribute("class","mcode")
+						vCode.innerHTML="Code : "+arr[x].numericCode					
+
+						vCols.appendChild(vCard)
+						vCard.appendChild(vTitle)
+						vCard.appendChild(vContent)
+						vContent.appendChild(vFlag)
+						vContent.appendChild(vCap)
+						vContent.appendChild(vPop)
+						vContent.appendChild(vReg)
+						vContent.appendChild(vCode)
+						vRows.appendChild(vCols)
+						x++;
+					}
+					vContainer.appendChild(vRows)				
+				}			
+			}).catch()
+ 	    </script>
+ 	</body>
+ </html>
